@@ -1,17 +1,96 @@
 <html>
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
 <head>
+<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <title></title>
 </head>
 <body>
+<h1><a href="">Enquete</a></h1>
+
+<div style="position: static; background-color: #A3E4D7; align-content: center; padding: 30px; text-align: justify-all;">
+<h3>Prezados Colegas</h3>
+
+<p>Queremos aproveitar a oportunidade para cumprimentá-lo e pedir sua colaboração. Desejamos apenas conhecer  seus critérios , portanto garantimos total anonimato na conclusão da pesquisa. </p>
+
+<p>Consiste em 50 (....) perguntas de frases, fáceis de responder (Positivo, Negativo ou Neutro) segundo seu criterio.</p>
+
+<p>É importante que a resposta seja com o máximo de sinceridade possível, dessa forma, obter-se-á que os pontos obtidos são reais e a investigação seja eficaz.</p>
+
+<p>Com antecedência, queremos mostrar nossos sinceros agradecimentos por seu esforço e colaboração"</p>
+</div>
+
+
+<form method="post" action="/prova/">
+    <table>
+        <tr>
+            <td>Enter your name:</td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td>Enter your email:</td>
+            <td><input type="email" name="email"/></td>
+        </tr>
+        <tr>
+            <td>Enter your phone:</td>
+            <td><input type="text" name="phone"/></td>
+        </tr>
+        <tr>
+            <td>
+ 
+            </td>
+            <td>
+                <button>Submit Form</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+<form action="1">
+		
+<input type="submit" value="Aceptar" />
+
+
+</form>
+    	
+
+
+
+
+<div style="padding: 10px; width: 800px; align-content: center;">
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+
+    	<h2>{{ question.question_text }}</h2>
+
+    	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		
+		<form action="{% url 'polls:vote' question.id %}" method="post">
+		
+		{% csrf_token %}
+		{% for choice in question.choice_set.all %}
+    		<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+		{% endfor %}
+		<input type="submit" value="Enviar" />
+		</form>
+    	
+
+        
 
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+</div>
 </body>
 </html>

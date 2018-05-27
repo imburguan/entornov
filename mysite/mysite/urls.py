@@ -20,5 +20,5 @@ from django.conf import settings
 
 urlpatterns = [
      url(r'^admin/', include(admin.site.urls)),
-     url(r'^polls/', include('polls.urls', namespace="polls")),
+     url(r'^enquete/', include('polls.urls', namespace="polls")),
 ]

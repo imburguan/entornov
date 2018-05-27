@@ -1,0 +1,30 @@
+li a {
+    color: green;
+}
+body {
+    background: white url("images/feec.gif") bottom center no-repeat;
+    border-image-width: 80px;
+    padding-left: 20px;
+
+}
+h1 a {
+	color: #FCA205;
+	font-family: 'Lobster';
+
+}
+h2 a {
+	font-family: 'Lobster';
+}
+
+h3 a {
+	font-family: 'Lobster';
+}
+div {
+	font-style: italic;
+	color: #2980B9;
+}
+p {
+	color:#1A5276;
+	text-align: justify-all;
+	font-size: 16;
+}

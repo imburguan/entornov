@@ -1,0 +1,65 @@
+<html>
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<head>
+<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <title></title>
+</head>
+<body>
+<h1><a href="">Enquete</a></h1>
+
+<div style="position: static; background-color: #A3E4D7; align-content: center; padding: 30px; text-align: justify-all;">
+<h3>Este index 2</h3>
+
+
+</div>
+
+
+<form>
+
+		
+<input type="submit" value="Aceptar"/>
+<button type="button" onclick="location.href = 'polls:detail'">Botón</button>
+</form>
+    	
+
+       
+
+
+
+
+<div style="padding: 10px; width: 800px; align-content: center;">
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+
+    	<h2>{{ question.question_text }}</h2>
+
+    	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+		<form action="{% url 'polls:vote' question.id %}" method="post">
+		
+		{% csrf_token %}
+		{% for choice in question.choice_set.all %}
+    		<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+		{% endfor %}
+		<input type="submit" value="Vote" />
+		</form>
+    	
+
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</div>
+</body>
+</html>
