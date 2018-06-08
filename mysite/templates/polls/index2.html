@@ -11,55 +11,45 @@
   <title></title>
 </head>
 <body>
-<h1><a href="">Enquete</a></h1>
+<h1><a href="">Enquete para a Identificação dos Estados Emocionais em Texto Narrativo do Português Brasileiro</a></h1>
 
-<div style="position: static; background-color: #A3E4D7; align-content: center; padding: 30px; text-align: justify-all;">
-<h3>Este index 2</h3>
+<p></p>
 
-
-</div>
-
-
-<form>
-
-		
-<input type="submit" value="Aceptar"/>
-<button type="button" onclick="location.href = 'polls:detail'">Botón</button>
-</form>
-    	
-
-       
-
-
-
-
-<div style="padding: 10px; width: 800px; align-content: center;">
+<div style="padding: 10px; width: 1000px; align-content: center;">
+{% with num=0 %}
 {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
 
-    	<h2>{{ question.question_text }}</h2>
+    <ol type="1">
 
-    	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-		<form action="{% url 'polls:vote' question.id %}" method="post">
-		
-		{% csrf_token %}
-		{% for choice in question.choice_set.all %}
-    		<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-		{% endfor %}
-		<input type="submit" value="Vote" />
-		</form>
-    	
-
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-
+    {% for question in latest_question_list %} <!-- loop for questions -->
+      <section id=question.id>
+      {{question.id}}
+      <h2><li>{{ question.question_text }}</li></h2>
+      </section>
+      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+      <!-- <div class= "question clearfix">
+      <div class="question-click-shield" tabindex="" -->
+      <!-- <form action="{% url 'polls:vote' question.id %}" method="post"> -->
+      <form action="{% url 'polls:index3' question.id %}" method="post">
+        {% csrf_token %}
+        {% for choice in question.choice_set.all %} <!-- loop for checkbox answers -->
+          <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+          <span style="color: black;">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label></br>
+          </span>
+        {% endfor %}
+        <!-- <input type="submit" value="Vote" /> -->
+      </form>
     {% endfor %}
-    </ul>
+    <input type="submit" value="Vote" />
+
+  </ol>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
 </div>
+{% endwith %}
+
 </body>
 </html>

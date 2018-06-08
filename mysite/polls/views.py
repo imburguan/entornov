@@ -1,68 +1,31 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from django.shortcuts import render_to_response, redirect, render #RequestContext
+from django.http import HttpResponse
 
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 
-#from django.http import HttpResponseRedirect, HttpResponse
-
-from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
-
 from django.urls import reverse
-
 from django.utils import timezone
-
-from .models import Choice, Question
-
-
 from django.http import HttpResponse
-#from django.template import loader
-#from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
-
-##El siguiente def para el formulario
-#@csrf_exempt
-
-##def index(request):
-##    #if post request came 
-##    if request.method == 'POST':
-##        #getting values from post
-##        name = request.POST.get('name')
-##        email = request.POST.get('email')
-##        phone = request.POST.get('phone')
-## 
-##        #adding the values in a context variable 
-##        context = {
-##            'name': name,
-##            'email': email,
-##            'phone': phone
-##        }
-##        
-##        #getting our showdata template
-##        template = loader.get_template('prova.html')
-##        
-##        #returing the template 
-##        return HttpResponse(template.render(context, request))
-##    else:
-##        #if post request is not true 
-##        #returing the form template 
-##        template = loader.get_template('index.html')
-##        return HttpResponse(template.render())
-##    #fin de index
-#### fin del def para el formulario
-
+from polls.models import Choice, Question #, Faixas
+#from . import forms
+#from django.shortcuts import render
+qid = 0
 
 class IndexView(generic.ListView):
-    
+
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
+
     def get_queryset(self):
         context_object_name = 'latest_question_list'
-        """Return the last five published questions."""
+        """Return the last fifthy published questions."""
         for query in Question.objects.order_by('-id')[:50]:
             print(query)
         return Question.objects.order_by('?')[:50]
@@ -70,7 +33,12 @@ class IndexView(generic.ListView):
 
 
 class Index2View(generic.ListView):
-    template_name = 'polls/index2.html'
+
+    if (qid == 0):
+        template_name = 'polls/index2.html'
+    else:
+        template_name = 'polls/index2.html#'+qid
+    print("url--> "+template_name)
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -97,14 +65,24 @@ class ResultsView(generic.DetailView):
 #    ... # same as above
 
 
+
+
 def vote(request, question_id):
-    p = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    qid=question_id;
+    if (qid == 0):
+        template_name = 'polls/index2.html'
+    else:
+        template_name = 'polls/index2.html#'+qid
+    print("url--> "+template_name)
     try:
-        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': p,
+
+
+        return render(request, 'polls/index2.html', {
+            'question': question,
             'error_message': "You didn't select a choice.",
         })
     else:
@@ -113,10 +91,10 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        #return HttpResponseRedirect(reverse('polls:index2' ,{'question_id':question_id}))
+        return HttpResponseRedirect(reverse('polls:index2'))
 
 
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question': question})
-    

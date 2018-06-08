@@ -1,0 +1,23 @@
+#test.html
+{% extends 'polls/index.html' %}
+
+
+  {% csrf_token %}
+  {{ form.as_p }}
+
+    <ul>
+
+
+        <li>
+            {{ form.faixa_text.label_tag }}
+            {{ form.faixa_text }}
+            {{ form.faixa_text.errors }}
+        </li>
+
+        {% block content %}
+                <h1>New post</h1>
+                <form method="POST" class="post-form">{% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="save btn btn-default">Save</button>
+                </form>
+            {% endblock %}

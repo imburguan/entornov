@@ -10,21 +10,11 @@ from django.utils import timezone
 import datetime
 
 
-# Create your models here.
 
-##class Pregunta (models.Model):
-##    asunto = models.CharField(max_length = 200)
-##    descripcion = models.TextField()
-##    fecha_publicacion = models.DataTimeField(auto_now_add=True)
-##
-##class Respuesta (models.Model):
-##    Pregunta = models. ForeingKey(Pregunta)
-##    contenido = models.TextField()
-##    mejor_respuesta = models.BooleanFiel("Su respuesta de prueba")
 
 
 class Question(models.Model):
-    #id           = models.IntegerField(primary_key=True)
+
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
 
@@ -36,11 +26,11 @@ class Question(models.Model):
 
     #def primary_key(self):
         #return self.id
-    
+
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
-    
+
 
 
 class Choice(models.Model):
@@ -50,3 +40,20 @@ class Choice(models.Model):
 
     def __unicode__ (self):              # __str__ on Python 3
         return self.choice_text
+
+
+class Faixas(models.Model):
+    faixa_text = models.CharField(max_length=200)
+    print ("Hola hola hola")
+
+    def __unicode__ (self):              # __str__ on Python 3
+        return self.faixas_text
+
+
+#
+# class Pessoas(models.Model):
+#     nome = models.CharField(max_length=200)
+#     id_faixa = models.ForeignKey(Faixas)
+#
+#     def __unicode__ (self):              # __str__ on Python 3
+#         return self.nome

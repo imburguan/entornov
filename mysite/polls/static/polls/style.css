@@ -2,7 +2,6 @@ li a {
     color: green;
 }
 body {
-    background: white url("images/feec.gif") bottom center no-repeat;
     border-image-width: 80px;
     padding-left: 20px;
 
@@ -14,6 +13,7 @@ h1 a {
 }
 h2 a {
 	font-family: 'Lobster';
+
 }
 
 h3 a {
@@ -22,9 +22,36 @@ h3 a {
 div {
 	font-style: italic;
 	color: #2980B9;
+  margin: 20px   30px   40px   10px;
 }
 p {
 	color:#1A5276;
 	text-align: justify-all;
 	font-size: 16;
+}
+element.style {
+    opacity: 1;
+}
+.survey-page .survey-title {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+    padding: 0;
+    font-weight: 300;
+    font-style: normal;
+    background-color: #00bf6f;
+}
+.survey-page .question-title-container {
+    color: #00bf6f;
+    /* font-size: 24px; */
+    font-weight: 300;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.question-number {
+    display: inline;
+}
+form {
+  margin: 20px   30px   40px   350px;
 }

@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
- 
+
 </head>
 <body>
 <h1>{{ question.question_text }}</h1>
 <ul>
+  
 {% for choice in question.choice_set.all %}
     <li>{{ choice.choice_text }} -- {{ choice.votes }} Escolha uma opção{{ choice.votes|pluralize }}</li>
 {% endfor %}
 </ul>
-<a href="{% url 'polls:detail' question.id %}">Voltar?</a>
+<a href="{% url 'polls:index2' %}">Voltar?</a>
 </body>
 </html>
